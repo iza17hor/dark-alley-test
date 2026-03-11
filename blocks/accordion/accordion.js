@@ -1,14 +1,12 @@
 export default function decorate(block) {
+  [...block.children].forEach((row) => {
+    const [title, content] = row.children;
 
-  [...block.children].forEach((section) => {
-    const title = section.children[0]; 
-    const content = section.children[1]; 
-
+    content.style.display = 'none';
 
     title.addEventListener('click', () => {
-      const isVisible = content.style.display === 'block';
-      content.style.display = isVisible ? 'none' : 'block';
-      section.classList.toggle('active'); 
+      content.style.display =
+        content.style.display === 'block' ? 'none' : 'block';
     });
   });
 }
