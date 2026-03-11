@@ -1,14 +1,16 @@
 export default function decorate(block) {
+
   [...block.children].forEach((section) => {
-    const title = section.querySelector('.accordion-title');
-    const content = section.querySelector('.accordion-content');
-    if (!title || !content) return;
+    const titleDiv = section.children[0]; 
+    const contentDiv = section.children[1]; 
 
-    title.style.cursor = 'pointer';
-    content.style.display = 'none';
 
-    title.addEventListener('click', () => {
-      content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    titleDiv.style.cursor = 'pointer';
+    contentDiv.style.display = 'none';
+
+
+    titleDiv.addEventListener('click', () => {
+      contentDiv.style.display = contentDiv.style.display === 'block' ? 'none' : 'block';
       section.classList.toggle('active');
     });
   });
