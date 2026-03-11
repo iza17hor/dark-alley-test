@@ -1,0 +1,9 @@
+.accordion-section {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+.accordion-title {
+  font-weight: bold;
+  cursor: pointer;
+}
