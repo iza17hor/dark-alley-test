@@ -1,19 +1,18 @@
-.accordion-section {
+.accordion > div {
   border: 1px solid #ccc;
   margin-bottom: 5px;
   padding: 10px;
 }
 
-.accordion-title {
+.accordion > div.active {
+  background-color: #f9f9f9;
+}
+
+.accordion > div > div:first-child {
   font-weight: bold;
   cursor: pointer;
 }
 
-.accordion-content {
-  display: none;
-  padding: 5px 0;
-}
-
-.accordion-section.active .accordion-content {
-  display: block;
+.accordion > div > div:last-child {
+  padding-top: 5px;
 }
