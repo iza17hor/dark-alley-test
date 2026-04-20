@@ -157,18 +157,32 @@ async function loadEager(doc) {
 async function loadLazy(doc) {
   loadHeader(doc.querySelector('header'));
 
+  const header = doc.querySelector('header');
+
+  function createLanguageSwitcher() {
+    const nav = document.createElement('div');
+    nav.className = 'lang-switcher';
+
+    const path = window.location.pathname;
+    const cleanPath = path.replace(/^\/(en|de)/, '');
+
+    const en = document.createElement('a');
+    en.href = `/en${cleanPath}`;
+    en.textContent = 'EN';
+
+    const de = document.createElement('a');
+    de.href = `/de${cleanPath}`;
+    de.textContent = 'DE';
+
+    nav.append(en, ' | ', de);
+    return nav;
+  }
+
+  header.append(createLanguageSwitcher());
+
   const main = doc.querySelector('main');
   await loadSections(main);
-
-  const { hash } = window.location;
-  const element = hash ? doc.getElementById(hash.substring(1)) : false;
-  if (hash && element) element.scrollIntoView();
-
-  loadFooter(doc.querySelector('footer'));
-
-  loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
-  loadFonts();
-}
+} 
 
 /**
  * Loads everything that happens a lot later,
@@ -181,35 +195,7 @@ function loadDelayed() {
 }
 
 
-const SUPPORTED_LANGS = ['en', 'de'];
-const DEFAULT_LANG = 'en';
 
-function getSafeLang(lang) {
-  if (!lang) return DEFAULT_LANG;
-
-  const normalized = String(lang).toLowerCase();
-
-  if (!SUPPORTED_LANGS.includes(normalized)) {
-    return DEFAULT_LANG;
-  }
-
-  return normalized;
-}
-
-export function switchLanguage(lang) {
-  const safeLang = getSafeLang(lang);
-
-  const path = window.location.pathname || '/';
-
-  const cleanPath = path.replace(/^\/(en|de)/, '');
-
-  const newUrl = `/${safeLang}${cleanPath}`;
-
-  window.location.href = newUrl;
-}
-
-
-window.switchLanguage = switchLanguage;
 
 async function loadPage() {
   await loadEager(document);
