@@ -180,10 +180,43 @@ function loadDelayed() {
   // load anything that can be postponed to the latest here
 }
 
+
+const SUPPORTED_LANGS = ['en', 'de'];
+const DEFAULT_LANG = 'en';
+
+function getSafeLang(lang) {
+  if (!lang) return DEFAULT_LANG;
+
+  const normalized = String(lang).toLowerCase();
+
+  if (!SUPPORTED_LANGS.includes(normalized)) {
+    return DEFAULT_LANG;
+  }
+
+  return normalized;
+}
+
+export function switchLanguage(lang) {
+  const safeLang = getSafeLang(lang);
+
+  const path = window.location.pathname || '/';
+
+  const cleanPath = path.replace(/^\/(en|de)/, '');
+
+  const newUrl = `/${safeLang}${cleanPath}`;
+
+  window.location.href = newUrl;
+}
+
+
+window.switchLanguage = switchLanguage;
+
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
 }
+
+
 
 loadPage();
