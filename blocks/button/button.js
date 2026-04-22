@@ -1,14 +1,23 @@
 export default function decorate(block) {
-  const link = block.querySelector('a');
   
-  if (link) {
-    link.classList.add('button-link');
-    
-    const buttonText = block.textContent.toLowerCase();
-    if (buttonText.includes('primary')) link.classList.add('primary');
-    if (buttonText.includes('secondary')) link.classList.add('secondary');
+  
+  const rows = [...block.children];
+  const contentRow = rows[1]; 
 
-    block.textContent = '';
-    block.append(link);
+  if (contentRow) {
+    const link = contentRow.querySelector('a');
+    
+    if (link) {
+   
+      link.classList.add('button-link');
+
+  
+      const textContent = contentRow.textContent.toLowerCase();
+      if (textContent.includes('primary')) link.classList.add('primary');
+      if (textContent.includes('secondary')) link.classList.add('secondary');
+
+
+      block.replaceChildren(link);
+    }
   }
 }
